@@ -1,6 +1,5 @@
 #include <raylib.h>
 #include <stdio.h>
-#include "x11_layer.h"
 
 #define WINDOW_WIDTH 250
 #define WINDOW_HEIGHT 250
@@ -26,10 +25,6 @@ int main(int argc, char *argv[]) {
     Image pixelated = ImageCopy(originalImage);
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
-    void *display = XOpenDisplay(NULL);
-    unsigned long win = (unsigned long)GetWindowHandle();
-
-    set_override_redirect(display, win);
 
     SetTargetFPS(FPS);
 

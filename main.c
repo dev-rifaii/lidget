@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include "xbg.h"
 #include <stdio.h>
 
 #define WINDOW_WIDTH 250
@@ -14,6 +15,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    #if defined(_GLFW_X11)
+        printf("x11");
+    #else
+        printf("NOT x11");
+    #endif
+
     char *IMAGE_PATH = argv[1];
 
     Image originalImage = LoadImage(IMAGE_PATH);
@@ -25,6 +32,8 @@ int main(int argc, char *argv[]) {
     Image pixelated = ImageCopy(originalImage);
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
+    while (!IsWindowReady()) {} //Wait for window to get ready
+    SetWindowAsBackground(GetWindowHandle());
 
     SetTargetFPS(FPS);
 
@@ -49,10 +58,8 @@ int main(int argc, char *argv[]) {
 
     UnloadImage(originalImage);
     UnloadImage(pixelated);
-
     UnloadTexture(originalTexture);
     UnloadTexture(pixelatedTexture);
-
     CloseWindow();
 
     return 0;

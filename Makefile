@@ -3,14 +3,14 @@ TARGET = $(PWD)/bin
 
 lidget: $(TARGET)/main.o $(TARGET)/xbg.o 
 	gcc -Wall -Wextra -O2 $^ \
-		-L$(RAYLIB)/lib -L/usr/include/X11 -lX11 -lraylib -Wl,-rpath=$(RAYLIB)/lib -o $(TARGET)/lidget
+		-L$(RAYLIB)/lib -L/usr/include/X11 -L/usr/include/GLFW -lX11 -lraylib -lglfw -Wl,-rpath=$(RAYLIB)/lib -o $(TARGET)/lidget
 
 $(TARGET)/main.o: main.c xbg.h | $(TARGET)
 	gcc -Wall -Wextra -O2 -I$(RAYLIB)/include -c main.c -o $(TARGET)/main.o
 
 
 $(TARGET)/xbg.o: xbg.c xbg.h | $(TARGET)
-	gcc -Wall -Wextra -O2 -I/usr/include/X11 -c xbg.c -o $(TARGET)/xbg.o
+	gcc -Wall -Wextra -O2 -I/usr/include/X11 -I/usr/include/GLFW -c xbg.c -o $(TARGET)/xbg.o
 
 $(TARGET):
 	mkdir -p $(TARGET)

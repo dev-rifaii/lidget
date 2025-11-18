@@ -15,12 +15,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    #if defined(_GLFW_X11)
-        printf("x11");
-    #else
-        printf("NOT x11");
-    #endif
-
     char *IMAGE_PATH = argv[1];
 
     Image originalImage = LoadImage(IMAGE_PATH);

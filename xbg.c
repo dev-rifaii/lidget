@@ -7,16 +7,9 @@
 #include <glfw3native.h>
 
 void SetWindowAsBackground(void *windowHandle) {
-    if (!windowHandle) {
-        fprintf(stderr, "Invalid window handle!\n");
-        return;
-    }
-
     Window x11Window = glfwGetX11Window(windowHandle);
-    printf("%p\n", windowHandle);
-    printf("%lu\n", x11Window);
-
     Display *d = XOpenDisplay(NULL);
+
     if (!d) {
         fprintf(stderr, "Cannot open X display\n");
         return;

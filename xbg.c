@@ -3,12 +3,10 @@
 #include "xbg.h"
 #include <X11/Xlib.h>
 #include <stdio.h>
-#include <glfw3.h>
-#include <glfw3native.h>
 
 void SetWindowAsBackground(void *windowHandle) {
-    XID windowId = *(XID *)windowHandle;
-    Window x11Window = windowId;
+    const XID windowId = *(XID *)windowHandle;
+    const Window x11Window = windowId;
     Display *d = XOpenDisplay(NULL);
 
     if (!d) {
@@ -18,16 +16,21 @@ void SetWindowAsBackground(void *windowHandle) {
 
     Window root = DefaultRootWindow(d);
 
-    XReparentWindow(d, x11Window, root, 0, 0);
-
+    // Override redirect so WM ignores it
     XSetWindowAttributes attrs;
     attrs.override_redirect = True;
     XChangeWindowAttributes(d, x11Window, CWOverrideRedirect, &attrs);
 
-    XMoveResizeWindow(d, x11Window, 0, 0, 500, 500);
-    XLowerWindow(d, x11Window); // Push behind all managed windows
-    // Map window to make it visible
+    XReparentWindow(d, x11Window, root, 0, 0);
+
+    // Resize to fill screen
+    XWindowAttributes rootAttrs;
+    XGetWindowAttributes(d, root, &rootAttrs);
+    XMoveResizeWindow(d, x11Window, 0, 0, rootAttrs.width, rootAttrs.height);
+
     XMapWindow(d, x11Window);
+
+    XLowerWindow(d, x11Window);
 
     XFlush(d);
 }

@@ -1,12 +1,12 @@
-RAYLIB = $(PWD)/lib/raylib-5.5
+RAYLIB = $(PWD)/lib/raylib/src
 TARGET = $(PWD)/bin
 
 lidget: $(TARGET)/main.o $(TARGET)/xbg.o 
 	gcc -Wall -Wextra -O2 $^ \
-		-L$(RAYLIB)/lib -L/usr/include/X11 -L/usr/include/GLFW -lX11 -lraylib -lglfw -Wl,-rpath=$(RAYLIB)/lib -o $(TARGET)/lidget
+		-L$(RAYLIB) -L/usr/include/X11 -L/usr/include/GLFW -lX11 -lraylib -lm -lglfw -Wl,-rpath=$(RAYLIB)/lib -o $(TARGET)/lidget
 
 $(TARGET)/main.o: main.c xbg.h | $(TARGET)
-	gcc -Wall -Wextra -O2 -I$(RAYLIB)/include -c main.c -o $(TARGET)/main.o
+	gcc -Wall -Wextra -O2 -I$(RAYLIB) -c main.c -o $(TARGET)/main.o
 
 
 $(TARGET)/xbg.o: xbg.c xbg.h | $(TARGET)

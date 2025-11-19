@@ -7,7 +7,8 @@
 #include <glfw3native.h>
 
 void SetWindowAsBackground(void *windowHandle) {
-    Window x11Window = glfwGetX11Window(windowHandle);
+    XID windowId = *(XID *)windowHandle;
+    Window x11Window = windowId;
     Display *d = XOpenDisplay(NULL);
 
     if (!d) {
@@ -25,8 +26,8 @@ void SetWindowAsBackground(void *windowHandle) {
 
     XMoveResizeWindow(d, x11Window, 0, 0, 500, 500);
     XLowerWindow(d, x11Window); // Push behind all managed windows
-
     // Map window to make it visible
     XMapWindow(d, x11Window);
+
     XFlush(d);
 }

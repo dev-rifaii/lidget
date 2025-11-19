@@ -1,6 +1,6 @@
 clang
 
 #https://github.com/MaskRay/ccls/wiki/Project-Setup#ccls-examples
--I./lib/raylib-5.5/include
+-I./lib/raylib/src
 -I/usr/include/X11
 -I/usr/include/GLFW
